@@ -87,7 +87,15 @@ export default function Home() {
               </span>
             </th>
             <th scope="col">Username</th>
-            <th scope="col">Email</th>
+            <th scope="col">
+              Email{" "}
+              <span
+                className="border btn btn-primary"
+                onClick={() => handleSort("email")}
+              >
+                Sort
+              </span>
+            </th>
           </tr>
         </thead>
         <tbody>
