@@ -35,25 +35,25 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const sortedData = [...data].sort((a, b) => {
-      const aValue = a[sortBy];
-      const bValue = b[sortBy];
+  // useEffect(() => {
+  //   const sortedData = [...data].sort((a, b) => {
+  //     const aValue = a[sortBy];
+  //     const bValue = b[sortBy];
 
-      if (sortOrder === "asc") {
-        return aValue.localeCompare(bValue);
-      } else {
-        return bValue.localeCompare(aValue);
-      }
-    });
+  //     if (sortOrder === "asc") {
+  //       return aValue.localeCompare(bValue);
+  //     } else {
+  //       return bValue.localeCompare(aValue);
+  //     }
+  //   });
 
-    setData(sortedData);
-  }, [sortBy, sortOrder]);
+  //   setData(sortedData);
+  // }, [sortBy, sortOrder]);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
 
-    const reorderedData = Array.from(sea);
+    // const reorderedData = Array.from(sea);
   };
 
   return (
