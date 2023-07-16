@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -49,6 +50,12 @@ export default function Home() {
     setData(sortedData);
   }, [sortBy, sortOrder]);
 
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const reorderedData = Array.from(sea);
+  };
+
   return (
     <div className="container">
       <h1 className="text-center my-4">This is Home</h1>
@@ -73,42 +80,62 @@ export default function Home() {
         </div>
       </div>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">
-              Name{" "}
-              <span
-                className="border btn btn-primary"
-                onClick={() => handleSort("name")}
-              >
-                Sort
-              </span>
-            </th>
-            <th scope="col">Username</th>
-            <th scope="col">
-              Email{" "}
-              <span
-                className="border btn btn-primary"
-                onClick={() => handleSort("email")}
-              >
-                Sort
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((user) => (
-            <tr key={user.id}>
-              <th>{user.id}</th>
-              <td>{user.name}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="dropabble">
+          {(provided) => (
+            <table
+              className="table"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">
+                    Name{" "}
+                    <span
+                      className="border btn btn-primary"
+                      onClick={() => handleSort("name")}
+                    >
+                      Sort
+                    </span>
+                  </th>
+                  <th scope="col">Username</th>
+                  <th scope="col">
+                    Email{" "}
+                    <span
+                      className="border btn btn-primary"
+                      onClick={() => handleSort("email")}
+                    >
+                      Sort
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((user) => (
+                  <Draggable key={user.id} draggableId={user.id.toString()}>
+                    {(provided) => (
+                      <tr
+                        key={user.id}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <th>{user.id}</th>
+                        <td>{user.name}</td>
+                        <td>{user.username}</td>
+                        <td>{user.email}</td>
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </tbody>
+            </table>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }
