@@ -1,3 +1,3 @@
 export default function useAuth() {
-  return false;
+  return true;
 }
